@@ -1,7 +1,8 @@
 /* global App, Ember */
 
 App.TodosController = Ember.ArrayController.extend({
-    orderAsc: true,
+    orderAsc: false,
+    sortProperties: ['date'],
 
     actions: {
         createTodo: function () {
@@ -13,8 +14,11 @@ App.TodosController = Ember.ArrayController.extend({
                 return;
             }
 
+            var obj = jsParseDate(todoText);
+
             todo = this.store.createRecord('todo', {
-                text: todoText,
+                text: obj.rest,
+                date: obj.date,
                 is_completed: false
             });
 
@@ -24,7 +28,7 @@ App.TodosController = Ember.ArrayController.extend({
         },
 
         orderToggle: function () {
-            this.set('sortProperties', ['text']);
+            this.set('sortProperties', ['date']);
             this.set('sortAscending', this.get('orderAsc'));
 
             this.set('orderAsc', !this.get('orderAsc'));

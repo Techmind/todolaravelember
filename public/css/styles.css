@@ -73,10 +73,21 @@ input.todo-checkbox {
     -ms-appearance: none;
     -o-appearance: none;
     appearance: none;
+    outline: none !important;
+}
+
+input.todo-date {
+    float: left;
+    width: 35%;
+    border: none;
+}
+
+.completed .todo-date {
+    text-decoration: line-through;
 }
 
 .todo-checkbox:after {
-    content: '✔';
+    content: 'v';
     font-size: 2em;
     color: #d9d9d9;
 }
@@ -91,7 +102,7 @@ input.todo-checkbox {
 
 .todo {
     float: left;
-    width: 87%;
+    width: 50%;
 }
 
 .delete {
