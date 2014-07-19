@@ -30,7 +30,7 @@ http://habrahabr.ru/post/204628/ (http://jsfiddle.net/Imater/5Lqx7/)
 
 Homestead/Homestead.yaml
 
-`
+```
 ---
 ip: "192.168.10.10"
 memory: 2048
@@ -52,7 +52,7 @@ sites:
 variables:
     - key: APP_ENV
       value: local
-`
+```
 
 3) если, что-то не понятно\не заработало, можно зайти на виртуалку, через "vagrant ssh"
 
