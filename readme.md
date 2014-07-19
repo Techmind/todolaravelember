@@ -1,7 +1,7 @@
 ## Laravel 4 + EmberJS Todo
 
 ### За основу взято
-готовый прмиер туду, на ларавеле и эмбере
+готовый пример туду, на ларавеле и эмбере
 1)https://github.com/jahvi/laravel-ember-todo
 оно юзает
 - Laravel 4.1
