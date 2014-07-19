@@ -17,6 +17,7 @@ class CreateTodosTable extends Migration {
 			$table->increments('id');
 			$table->string('text');
 			$table->boolean('is_completed');
+            $table->integer('date');
 		});
 	}
 
