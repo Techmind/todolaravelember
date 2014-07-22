@@ -1,47 +1,67 @@
-# Laravel 4 Pagoda Box Quickstart
+## Laravel 4 + EmberJS Todo
 
-Provides a Quickstart installation of Laravel 4 including a preconfigured MySQL database, automatic [Composer](http://getcomposer.org) package installation, and Laravel database migrations.
+### За основу взято
 
-## Pagoda Box Installation
+готовый пример туду, на ларавеле и эмбере
 
-You can install the Quickstart either directly from the [Pagoda Box App Cafe](https://pagodabox.com/cafe/briankiewel/laravel-4), as a Quickstart through your Pagoda Box dashboard during the new application creation process, or by cloning the [GitHub repository](https://github.com/briankiewel/pagodabox-laravel-4) and pushing it to an empty Pagoda Box application repository.
+1)https://github.com/jahvi/laravel-ember-todo, оно юзает
 
-## Local Development Installation
+- Laravel 4.1
+- jQuery 1.10.2
+- Handlebars 1.3
+- EmberJS [1.3.1](http://builds.emberjs.com/tags/v1.3.1/ember.js)
+- Ember Data [1.0.0 Beta 6](http://builds.emberjs.com/tags/v1.0.0-beta.6/ember-data.js)
 
-* Clone repository locally  
-  `git clone git@github.com:briankiewel/pagodabox-laravel-4.git`
-* If [Composer](http://getcomposer.org/) is not already installed locally, install it
-* Install the Laravel dependencies  
-  `composer install`
-* Edit `bootstrap/start.php` and add your local machine's hostname to the `local` element in the `detectEnvironment` call parameter array
-* Set your local web server to use the `public` folder as the document root
+2) для парсинга дат взята либа отсюда:
 
-Last updated: 7/5/2014
+http://habrahabr.ru/post/204628/ (http://jsfiddle.net/Imater/5Lqx7/)
 
+3) date-picker: https://github.com/dbushell/Pikaday
+
+### Как установить
+
+Опционально(установка виртуалку для проверки на локальной машине, для винды\мака):
+
+1) Ставим virtulbox(https://www.virtualbox.org/) & vagrant(менеджер виртуалок), http://www.vagrantup.com/downloads.html
+
+2) По инструкции(http://laravel.com/docs/homestead) настраиваем его(все довольно просто и сводиться к указанию путей и хоста в Homestead.yaml )
+
+Пример для винды:
+
+Homestead/Homestead.yaml
+
+```
 ---
+ip: "192.168.10.10"
+memory: 2048
+cpus: 1
 
-## Laravel PHP Framework
+authorize: C:/Users/ilya/.ssh/id_rsa
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+keys:
+    - C:/Users/ilya/.ssh/id_rsa
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+folders:
+    - map: c:/Projects/laravel/
+      to: /home/vagrant/Code
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
+sites:
+    - map: homestead.app
+      to: c:/Projects/laravel/todolaravelember/public/
 
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+variables:
+    - key: APP_ENV
+      value: local
+```
 
-## Official Documentation
+3) если, что-то не понятно\не заработало, можно зайти на виртуалку, через "vagrant ssh"
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
+Собственно установка приложения:
 
-### Contributing To Laravel
+1. git clone https://github.com/Techmind/todolaravelember.git
 
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+2. (vagrant) ssh <- `composer install`
 
-### License
+3. (vagrant) ssh <- `php artisan migrate` (в app/config/database.php настройки конфига базы данных прописаны для виртуалки, как в инструкции выше)
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+4. google-chrome http://homestead.app:8000/
