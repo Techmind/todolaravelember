@@ -12,13 +12,14 @@ Ember.Handlebars.registerBoundHelper('formattedDate', function(date) {
     return moment(date).format('llll');
 });
 
+// we need to pass our own channel for each operation, so we wont get our  own updates
 App.ApplicationAdapter = DS.RESTAdapter.extend({
     buildURL: function(record, suffix) {
         return this._super(record, suffix) + "?es_id=" + es_id;
     }
 });
 
-// date ,anipulation pn saving
+// date manipulation at saving
 App.DateTransform = DS.Transform.extend({
 	// we will save date as timestamp in milliseconds - easier to work in js, but will require big int
     serialize: function(value) {
@@ -48,10 +49,12 @@ App.DateField = Ember.TextField.extend({
     updateDate: function() {
         var old_date = this.get("date");
         var date = moment(this.get("value"), "DD.MM.YYYY H:mm").toDate();
-        date.setHours(old_date.getHours(), old_date.getMinutes(), old_date.getSeconds());
-        // at least second changed
-        if (Math.abs(date.getTime() - old_date.getTime()) > 1000) {
-            this.set("date", date)
+        if (date && old_date) {
+            date.setHours(old_date.getHours(), old_date.getMinutes(), old_date.getSeconds());
+            // at least second changed
+            if (Math.abs(date.getTime() - old_date.getTime()) > 1000) {
+                this.set("date", date)
+            }
         }
     }.observes("value"),
 

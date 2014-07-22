@@ -13,9 +13,14 @@
 
 Route::resource('todos', 'TodosController');
 
+// aren`t worth it`s own controller
 Route::get('/listen/{id}', function ($id) {
-
-
+    // async nobody will notice small delay anyway, garbage collecy dead queues
+    // this should be cron-worker, but seems to much for simple test app
+    if (rand(0, 10) == 0) {
+        $upd = new TodoUpdate();
+        $upd->cleanup();
+    }
     $response = new Symfony\Component\HttpFoundation\StreamedResponse(function() use ($id) {
         $upd = new TodoUpdate();
         $timeout = $real_timeout = 20;
@@ -28,6 +33,7 @@ Route::get('/listen/{id}', function ($id) {
                 echo 'data: ' . json_encode($res) . "\n\n";
                 ob_flush();
                 flush();
+                // poor man`s event sourcing, actullay long polling
                 return;
             }
         }
