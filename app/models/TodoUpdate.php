@@ -14,7 +14,8 @@ class TodoUpdate {
 
     public function __construct()
     {
-        $this->redis = Redis::connection();
+        // work around to not use extension on pagodabox
+        $this->redis = RedisL4::connection();
     }
 
     public function getQueueId()
