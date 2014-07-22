@@ -71,11 +71,16 @@
         </footer>
     </script>
 
+    <script>
+        var es_id = <?php echo $id;?>;
+    </script>
+
     <script src="//momentjs.com/downloads/moment-with-langs.min.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
     <script src="//builds.emberjs.com/tags/v1.3.1/ember.min.js"></script>
     <script src="//builds.emberjs.com/tags/v1.0.0-beta.6/ember-data.min.js"></script>
+    <script src="/js/vendor/eventsource.min.js"></script>
     <script src="/js/app.js"></script>
     <script src="/js/router.js"></script>
     <script src="/js/models/todo.js"></script>
@@ -85,5 +90,6 @@
     <script src="/js/views/todos_view.js"></script>
     <script src="/js/helpers/helpers.js"></script>
     <script src="//dbushell.github.io/Pikaday/pikaday.js"></script>
+
 </body>
 </html>

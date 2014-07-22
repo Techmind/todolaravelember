@@ -1,8 +1,10 @@
 <?php
 
 class TodosController extends \BaseController {
+    const UPDATE_CMD = 'upd';
+    const DELETE_CMD = 'del';
 
-	/**
+    /**
 	 * Todo instance
 	 *
 	 * @var Todo
@@ -31,6 +33,20 @@ class TodosController extends \BaseController {
 		return Response::json(compact('todos'));
 	}
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function show($id)
+    {
+        $todo = $this->todo->findOrFail($id);
+
+        $todo = $todo->toArray();
+
+        return Response::json(compact('todo'));
+    }
+
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -39,9 +55,12 @@ class TodosController extends \BaseController {
 	public function store()
 	{
 		$data = Input::get('todo');
+        $ignored_channel = Input::get('es_id');
 
 		$todo = $this->todo->create($data);
 		$todo = $todo->toArray();
+        $upd = new TodoUpdate();
+        $upd->publish(self::UPDATE_CMD, $todo['id'], $ignored_channel);
 
 		return Response::json(compact('todo'), 201);
 	}
@@ -55,12 +74,17 @@ class TodosController extends \BaseController {
 	public function update($id)
 	{
 		$data = Input::get('todo');
+        $ignored_channel = Input::get('es_id');
 		$todo = $this->todo->findOrFail($id);
 
 		$todo->update($data);
-		$todo = $todo->toArray();
 
-		return Response::json(compact('todo'));
+        $todo = $todo->toArray();
+        $upd = new TodoUpdate();
+        $upd->publish(self::UPDATE_CMD, $todo['id'], $ignored_channel);
+
+
+        return Response::json(compact('todo'));
 	}
 
 	/**
@@ -71,7 +95,12 @@ class TodosController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		$this->todo->destroy($id);
+        $ignored_channel = Input::get('es_id');
+
+        $this->todo->destroy($id);
+
+        $upd = new TodoUpdate();
+        $upd->publish(self::DELETE_CMD, $id, $ignored_channel);
 
 		return Response::make(null, 204);
 	}

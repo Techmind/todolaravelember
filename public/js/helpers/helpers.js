@@ -12,6 +12,12 @@ Ember.Handlebars.registerBoundHelper('formattedDate', function(date) {
     return moment(date).format('llll');
 });
 
+App.ApplicationAdapter = DS.RESTAdapter.extend({
+    buildURL: function(record, suffix) {
+        return this._super(record, suffix) + "?es_id=" + es_id;
+    }
+});
+
 // date ,anipulation pn saving
 App.DateTransform = DS.Transform.extend({
 	// we will save date as timestamp in milliseconds - easier to work in js, but will require big int

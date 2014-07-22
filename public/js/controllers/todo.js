@@ -84,7 +84,7 @@ App.TodoController = Ember.ObjectController.extend({
     fillStyle: function() {
         var today = new Date();
         var date = this.get('date');
-        if (today.getTime() + this.get('highlight_period') * 1000 >= date.getTime()) {
+        if (date && (today.getTime() + this.get('highlight_period') * 1000 >= date.getTime())) {
           return 'border:1px solid red';
         }
         return '';
